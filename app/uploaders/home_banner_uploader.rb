@@ -19,7 +19,7 @@ class HomeBannerUploader < CarrierWave::Uploader::Base
 
 
   version :small do
-    process resize_to_fill: [600, 375]
+    process resize_to_fill: [800, 500]
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

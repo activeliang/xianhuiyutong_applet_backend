@@ -19,7 +19,7 @@ class CategoryImageUploader < CarrierWave::Uploader::Base
 
 
   version :thumb do
-    process resize_to_fill: [150, 130]
+    process resize_to_fill: [300, 260]
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

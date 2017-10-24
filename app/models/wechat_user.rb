@@ -10,7 +10,7 @@ class WechatUser < ApplicationRecord
     if wechat_user = self.find_by_client_token(params[:client_token])
       type_admin = wechat_user.user && wechat_user.user.is_admin && wechat_user.expired_at > Time.now
       # 更新登录记录
-      if last_log = LoginLog.render_wechat_user_last_log(wechat_user.id) && last_log.login_at > Time.now - 900
+      if (last_log = LoginLog.render_wechat_user_last_log(wechat_user.id)) && last_log.login_at > Time.now - 900
         last_log.update_column :login_at, Time.now
       else
         LoginLog.create wechat_user_id: wechat_user.id, login_at: Time.now
