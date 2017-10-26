@@ -23,13 +23,29 @@ class ProductsController < ApplicationController
   # 新增产品
   def create
     @product = Product.new(product_params)
-    if @product.save
+    if @product.save && params[:product][:images].present?
       params[:product][:images].each do |img|
         @product.product_images << ProductImage.new(image: img)
       end
       redirect_to products_path, notice: "create success!新增成功~"
     else
       @category_roots = Category.roots
+      @product.errors.add(:image, "您没有选择图片哦~！") if !params[:product][:images].present?
+      flash[:warning] = @product.errors.messages.values.flatten.join("&")
+      render :new
+    end
+  end
+
+  def update
+    @product = Product.new(product_params)
+    if @product.save && params[:product][:images].present?
+      params[:product][:images].each do |img|
+        @product.product_images << ProductImage.new(image: img)
+      end
+      redirect_to products_path, notice: "create success!新增成功~"
+    else
+      @category_roots = Category.roots
+      @product.errors.add(:image, "您没有选择图片哦~！") if !params[:product][:images].present?
       flash[:warning] = @product.errors.messages.values.flatten.join("&")
       render :new
     end
