@@ -23,7 +23,7 @@ class WechatUser < ApplicationRecord
 
   # 通过wechat_login_code登入
   def self.login_form_wechat_login_code(params)
-    respsive = JSON.parse RestClient.get("https://api.weixin.qq.com/sns/jscode2session?appid=wxab796158f760a2c7&secret=8e1b66091502dc3e1ae60890ef94cce3&js_code=" + params[:code] + "&grant_type=authorization_code").body
+    respsive = JSON.parse RestClient.get("https://api.weixin.qq.com/sns/jscode2session?appid=wx2cd2dda21e12ee92&secret=9065d9dbdd7efce23f9a9df08d5d5165&js_code=" + params[:code] + "&grant_type=authorization_code").body
     if respsive.present?
       client_token = SecureRandom.hex(16)
       wx_user = self.find_by_open_id(respsive["openid"]) || self.new
