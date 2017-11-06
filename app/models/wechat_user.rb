@@ -13,7 +13,7 @@ class WechatUser < ApplicationRecord
       if (last_log = LoginLog.render_wechat_user_last_log(wechat_user.id)) && last_log.login_at > Time.now - 900
         last_log.update_column :login_at, Time.now
       else
-        LoginLog.create wechat_user_id: wechat_user.id, login_at: Time.now
+        LoginLog.create wechat_user_id: wechat_user.id, login_at: Time.now, is_hide: (wechat_user.is_hide ? true : false)
       end
       return { status: "ok", userToken: wechat_user.client_token, userType: type_admin ? "admin" : "general"}
     else
@@ -47,7 +47,7 @@ class WechatUser < ApplicationRecord
         last_log.login_at = Time.now
         last_log.save
       else
-        LoginLog.create wechat_user_id: wx_user.id, login_at: Time.now
+        LoginLog.create wechat_user_id: wx_user.id, login_at: Time.now, is_hide: (wx_user.is_hide ? true : false)
       end
       return { status: "ok", userToken: wx_user.client_token, userType: "general" }
     end
